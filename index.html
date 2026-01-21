@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta name="theme-color" content="#A50000" />
+    <meta name="description" content="Ademicon - Estratégia e inteligência financeira através do consórcio. Conquiste seu patrimônio com a maior administradora independente do Brasil." />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ademicon.com.br/" />
+    <meta property="og:title" content="Ademicon | A Arte do Patrimônio Estratégico" />
+    <meta property="og:description" content="Planejamento inteligente para aquisição de bens sem juros abusivos." />
+    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Ademicon | A Arte do Patrimônio Estratégico" />
+    <meta property="twitter:description" content="Planejamento inteligente para aquisição de bens sem juros abusivos." />
+
+    <title>Ademicon | Inteligência em Consórcio e Patrimônio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+            },
+            colors: {
+              vintage: {
+                bg: '#F9F7F2',
+                paper: '#F1EDE4',
+                red: '#A50000',
+                ink: '#1A1A1A',
+                gray: '#7A7A7A',
+              },
+              brand: {
+                500: '#A50000',
+                600: '#8A0000',
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+      html { scrollbar-gutter: stable; }
+      body { 
+        background-color: #F9F7F2; 
+        color: #1A1A1A; 
+        overflow-x: hidden;
+        width: 100%;
+        font-size: 16px;
+        -webkit-font-smoothing: antialiased;
+      }
+      .paper-texture { 
+        background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+      }
+      .reveal { opacity: 0; will-change: transform, opacity; }
+      
+      ::-webkit-scrollbar { width: 4px; }
+      ::-webkit-scrollbar-track { background: #F9F7F2; }
+      ::-webkit-scrollbar-thumb { background: #A50000; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal { opacity: 1; transform: none !important; }
+      }
+    </style>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FinancialService",
+      "name": "Ademicon",
+      "description": "Estratégia financeira e consórcio independente.",
+      "url": "https://ademicon.com.br/",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Curitiba",
+        "addressRegion": "PR",
+        "addressCountry": "BR"
+      }
+    }
+    </script>
+
+    <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.469.0",
+    "gsap": "https://esm.sh/gsap@3.12.5",
+    "gsap/ScrollTrigger": "https://esm.sh/gsap@3.12.5/ScrollTrigger",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "gsap/": "https://esm.sh/gsap@^3.14.2/"
+  }
+}
+</script>
+  </head>
+  <body class="antialiased selection:bg-brand-500 selection:text-white paper-texture">
+    <div id="root"></div>
+    <script type="module" src="index.tsx"></script>
+  </body>
+</html>
