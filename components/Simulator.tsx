@@ -8,27 +8,36 @@ interface DataPoint {
   installment: number;
 }
 
+/** 
+ * TABELA IMÓVEIS - ATUALIZADA PARA 50% DE REDUÇÃO
+ * Base: R$ 80.000,00 -> R$ 270,00 (conforme feedback do cliente)
+ * Coeficiente aplicado: 0,003375
+ */
 const IMOB_DATA: DataPoint[] = [
-  { credit: 80000, installment: 341.82 },
-  { credit: 100000, installment: 427.27 },
-  { credit: 150000, installment: 854.55 },
-  { credit: 200000, installment: 854.55 },
-  { credit: 350000, installment: 1495.45 },
-  { credit: 500000, installment: 1958.33 },
-  { credit: 1000000, installment: 3196.67 },
+  { credit: 80000, installment: 270.00 },
+  { credit: 100000, installment: 337.50 },
+  { credit: 150000, installment: 506.25 },
+  { credit: 200000, installment: 675.00 },
+  { credit: 350000, installment: 1181.25 },
+  { credit: 500000, installment: 1687.50 },
+  { credit: 1000000, installment: 3375.00 },
 ];
 
+/**
+ * TABELA VEÍCULOS - BASEADA NA TABELA TADEU (ANEXO 5)
+ */
 const CARRO_DATA: DataPoint[] = [
   { credit: 42000, installment: 313.95 },
   { credit: 68000, installment: 508.30 },
-  { credit: 200000, installment: 1682.00 },
-  { credit: 350000, installment: 2320.00 },
+  { credit: 200000, installment: 1160.00 },
+  { credit: 290000, installment: 1682.00 },
+  { credit: 350000, installment: 2030.00 },
   { credit: 400000, installment: 2320.00 },
 ];
 
 const Simulator: React.FC = () => {
   const [category, setCategory] = useState<Category>('imovel');
-  const [credit, setCredit] = useState(500000);
+  const [credit, setCredit] = useState(category === 'imovel' ? 500000 : 68000);
 
   const currentData = useMemo(() => (category === 'imovel' ? IMOB_DATA : CARRO_DATA), [category]);
 
@@ -56,8 +65,8 @@ const Simulator: React.FC = () => {
   const formatter = useMemo(() => new Intl.NumberFormat('pt-BR', { 
     style: 'currency',
     currency: 'BRL',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0 
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2 
   }), []);
 
   const handleCategoryChange = useCallback((cat: Category) => {
@@ -66,7 +75,7 @@ const Simulator: React.FC = () => {
   }, []);
 
   const WHATSAPP_URL = useMemo(() => 
-    `https://wa.me/554788451523?text=Olá, gostaria de uma simulação para ${category === 'imovel' ? 'imóvel' : 'veículo'} de ${formatter.format(credit)}.`,
+    `https://wa.me/554788451523?text=Olá, gostaria de uma simulação para ${category === 'imovel' ? 'imóvel' : 'veículo'} de ${formatter.format(credit)} com parcela reduzida de 50%.`,
   [category, credit, formatter]);
 
   return (
@@ -74,7 +83,7 @@ const Simulator: React.FC = () => {
       <div className="container mx-auto px-4 md:px-16 max-w-7xl relative z-10">
         
         <header className="mb-10 text-center space-y-2 reveal">
-          <span className="text-vintage-red font-bold uppercase tracking-[0.6em] text-[10px] block">Diagnóstico Patrimonial</span>
+          <span className="text-vintage-red font-bold uppercase tracking-[0.6em] text-[10px] block">Simulador de Alavancagem</span>
           <h2 className="text-4xl md:text-6xl font-serif text-vintage-ink tracking-tight">
             Trace o seu <span className="italic font-light">Destino.</span>
           </h2>
@@ -103,7 +112,7 @@ const Simulator: React.FC = () => {
             <div className="space-y-4">
               <label htmlFor="credit-range" className="text-[10px] font-bold uppercase tracking-[0.4em] text-vintage-ink/40">Crédito Desejado</label>
               <div className="flex items-baseline gap-3">
-                <output className="text-5xl md:text-8xl font-sans font-black text-vintage-ink tracking-tighter leading-none">
+                <output className="text-4xl md:text-7xl font-sans font-black text-vintage-ink tracking-tighter leading-none">
                   {formatter.format(credit)}
                 </output>
               </div>
@@ -131,22 +140,28 @@ const Simulator: React.FC = () => {
           <div className="lg:col-span-5 bg-vintage-red p-8 md:p-14 text-white flex flex-col justify-center relative">
             <div className="absolute -top-10 -right-10 text-[18rem] font-serif text-white/[0.03] pointer-events-none italic select-none">♔</div>
             
-            <div className="space-y-10 relative z-10">
+            <div className="space-y-8 relative z-10">
               <div className="space-y-2">
-                 <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-white/50">Parcela Mensal Estimada</span>
-                 <div className="text-5xl md:text-7xl font-sans font-bold tracking-tighter text-white leading-none">
+                 <div className="flex flex-col">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-white/50">Parcela Mensal</span>
+                  <span className="text-[12px] font-black uppercase tracking-[0.2em] text-white">Reduzida (50%)</span>
+                 </div>
+                 <div className="text-5xl md:text-6xl font-sans font-bold tracking-tighter text-white leading-none">
                     {formatter.format(calculatedInstallment)}
                  </div>
+                 <p className="text-[9px] text-white/60 font-bold uppercase tracking-[0.2em] pt-3 italic">
+                    *Válido até a contemplação. Valor sujeito a alteração.
+                 </p>
               </div>
 
-              <div className="space-y-4 pt-8 border-t border-white/10">
+              <div className="space-y-4 pt-6 border-t border-white/10">
                  <div className="flex justify-between items-center text-[10px] uppercase tracking-[0.3em] font-bold">
                   <span className="text-white/40">Taxa de Juros</span>
-                  <span className="text-white">Isento</span>
+                  <span className="text-white">0% (Isento)</span>
                  </div>
                  <div className="flex justify-between items-center text-[10px] uppercase tracking-[0.3em] font-bold">
-                  <span className="text-white/40">Poder de Negociação</span>
-                  <span className="text-white">À Vista</span>
+                  <span className="text-white/40">Modalidade</span>
+                  <span className="text-white">Meia Parcela</span>
                  </div>
               </div>
 
@@ -164,9 +179,14 @@ const Simulator: React.FC = () => {
 
         </div>
 
-        <p className="mt-8 text-center text-[9px] text-vintage-ink/20 font-bold uppercase tracking-[0.3em] reveal">
-          *Estimativas baseadas em grupos médios Ademicon. Sujeito a disponibilidade de cotas.
-        </p>
+        <div className="mt-8 text-center space-y-2 reveal">
+          <p className="text-[9px] text-vintage-ink/30 font-bold uppercase tracking-[0.3em] max-w-2xl mx-auto leading-relaxed">
+            *As parcelas exibidas referem-se à opção de 50% de redução no valor da prestação até a contemplação do crédito, conforme as tabelas vigentes da Ademicon.
+          </p>
+          <p className="text-[9px] text-vintage-red/40 font-bold uppercase tracking-[0.3em]">
+            Valores sujeitos a alterações sem aviso prévio. Consulte condições no contrato.
+          </p>
+        </div>
       </div>
     </section>
   );
