@@ -81,15 +81,18 @@
       .paper-texture { 
         background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
       }
-      .reveal { opacity: 0; will-change: transform, opacity; }
       
+      /* Revelação progressiva via GSAP */
+      .reveal { opacity: 0; will-change: transform, opacity; }
+
       ::-webkit-scrollbar { width: 4px; }
       ::-webkit-scrollbar-track { background: #F9F7F2; }
       ::-webkit-scrollbar-thumb { background: #A50000; }
 
-      @media (max-width: 768px) {
+      /* Mobile and Accessibility: Always visible if screen is small or motion reduced */
+      @media (max-width: 768px), (prefers-reduced-motion: reduce) {
         .reveal { opacity: 1 !important; transform: none !important; }
-        * { transition: none !important; animation-duration: 0.01s !important; }
+        * { transition: none !important; animation: none !important; }
       }
     </style>
 

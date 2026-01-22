@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useLayoutEffect, Suspense, lazy } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
@@ -64,7 +64,8 @@ function App() {
               y: 0,
               duration: 1.5,
               ease: "power4.out",
-              clearProps: "all"
+              // CORREÇÃO: Não limpamos a opacidade, apenas y e transform para manter o elemento visível
+              clearProps: "y,transform" 
             }
           );
         });
@@ -84,11 +85,14 @@ function App() {
                 stagger: 0.15,
                 duration: 1.2,
                 ease: "power3.out",
-                clearProps: "all"
+                clearProps: "y,transform"
               }
             );
           }
         });
+
+        // Garante que o GSAP recalcule todas as posições após a montagem
+        setTimeout(() => ScrollTrigger.refresh(), 500);
       });
 
       return () => {

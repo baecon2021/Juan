@@ -10,7 +10,7 @@ const Pain: React.FC = () => {
   ], []);
 
   return (
-    <section className="bg-vintage-red py-8 md:py-10 overflow-hidden" aria-label="Estatísticas de Mercado">
+    <section className="bg-vintage-red py-8 md:py-10 overflow-hidden reveal" aria-label="Estatísticas de Mercado">
       <div className="container mx-auto px-6 max-w-6xl">
         <dl className="grid grid-cols-2 lg:grid-cols-4 gap-8 items-center">
           {stats.map((stat, index) => (
