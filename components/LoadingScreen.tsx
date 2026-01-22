@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
+import gsap from 'gsap';
 
 const LoadingScreen: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -8,6 +8,12 @@ const LoadingScreen: React.FC<{ onComplete: () => void }> = ({ onComplete }) => 
   const dotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Se for mobile, completa instantaneamente
+    if (window.innerWidth <= 768) {
+      onComplete();
+      return;
+    }
+
     const tl = gsap.timeline({
       onComplete: () => onComplete()
     });
@@ -27,12 +33,15 @@ const LoadingScreen: React.FC<{ onComplete: () => void }> = ({ onComplete }) => 
     })
     .to(containerRef.current, {
       yPercent: -100,
-      opacity: 0.8, // Fade out gradual enquanto sobe
+      opacity: 0.8,
       duration: 1.5,
       ease: "expo.inOut",
       delay: 0.3
     });
   }, [onComplete]);
+
+  // Se for mobile, não renderiza nada antes do onComplete ser chamado
+  if (window.innerWidth <= 768) return null;
 
   return (
     <div 

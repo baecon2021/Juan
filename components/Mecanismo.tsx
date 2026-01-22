@@ -21,9 +21,9 @@ const Mecanismo: React.FC = () => {
   ];
 
   return (
-    <section id="alavancagem" className="py-24 md:py-40 bg-vintage-bg reveal relative">
+    <section id="alavancagem" className="py-16 md:py-28 bg-vintage-bg reveal relative transform-gpu scroll-mt-24">
       <div className="container mx-auto px-8 md:px-16 max-w-[90rem] relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
           
           <div className="space-y-8">
             <div className="space-y-4">
@@ -39,24 +39,23 @@ const Mecanismo: React.FC = () => {
             </p>
           </div>
 
-          {/* Grid container com bg-white para criar a linha divisória entre os blocos */}
           <div className="grid grid-cols-1 gap-0.5 bg-white border border-vintage-red/20 rounded-sm overflow-hidden shadow-2xl max-w-xl lg:ml-auto w-full">
             {passos.map((passo, idx) => (
               <div 
                 key={idx} 
-                className={`p-8 md:p-10 transition-all duration-500 ease-in-out hover:bg-white group transform-gpu hover:z-10 cursor-default ${
+                className={`p-7 md:p-9 transition-colors duration-500 ease-in-out lg:hover:bg-white group transform-gpu cursor-default active:bg-vintage-ink/5 ${
                   idx % 2 === 0 ? 'bg-vintage-red' : 'bg-vintage-red/95'
                 }`}
               >
-                <div className="flex gap-8 items-start">
-                  <div className="text-4xl md:text-5xl text-white/40 font-serif group-hover:text-vintage-red group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-500 leading-none select-none">
+                <div className="flex gap-6 md:gap-8 items-start">
+                  <div className="text-4xl md:text-5xl text-white/40 font-serif lg:group-hover:text-vintage-red lg:group-hover:scale-110 transition-all duration-500 leading-none select-none">
                     {passo.num}
                   </div>
-                  <div className="space-y-3">
-                    <h4 className="font-bold text-white text-xs md:text-base uppercase tracking-[0.3em] group-hover:text-vintage-ink transition-colors duration-500">
+                  <div className="space-y-2 md:space-y-3">
+                    <h4 className="font-bold text-white text-xs md:text-base uppercase tracking-[0.3em] lg:group-hover:text-vintage-ink transition-colors duration-500">
                       {passo.titulo}
                     </h4>
-                    <p className="text-white/90 text-[13px] md:text-sm leading-relaxed font-normal group-hover:text-vintage-ink/80 transition-colors duration-500">
+                    <p className="text-white/90 text-[12px] md:text-sm leading-relaxed font-normal lg:group-hover:text-vintage-ink/80 transition-colors duration-500">
                       {passo.desc}
                     </p>
                   </div>

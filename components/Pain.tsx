@@ -1,26 +1,26 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
 
 const Pain: React.FC = () => {
-  const stats = [
+  const stats = useMemo(() => [
     { value: "588 Mil+", label: "CLIENTES ATENDIDOS" },
-    { value: "R$ 132, 4 BI+", label: "CRÉDITOS COMERCIALIZADOS" },
-    { value: "846 Mil+", label: "COTAS COMERCIALIZADAS" },
-    { value: "28 marcas+", label: "ADMINISTRADAS" },
-  ];
+    { value: "R$ 132,4 BI+", label: "CRÉDITO COMERCIALIZADO" },
+    { value: "846 Mil+", label: "COTAS ATIVAS" },
+    { value: "28 MARCAS", label: "ADMINISTRADAS" },
+  ], []);
 
   return (
-    <section className="bg-[#A50000] py-6 md:py-8 overflow-hidden border-b border-white/5" aria-label="Estatísticas de Mercado">
-      <div className="container mx-auto px-6 max-w-5xl">
-        <dl className="grid grid-cols-2 lg:grid-cols-4 gap-y-6 gap-x-4 items-center">
+    <section className="bg-vintage-red py-8 md:py-10 overflow-hidden" aria-label="Estatísticas de Mercado">
+      <div className="container mx-auto px-6 max-w-6xl">
+        <dl className="grid grid-cols-2 lg:grid-cols-4 gap-8 items-center">
           {stats.map((stat, index) => (
-            <div key={index} className="flex flex-col items-center text-center space-y-1 group">
-              <dt className="text-white/60 text-[7px] md:text-[8px] font-bold uppercase tracking-[0.25em] leading-tight max-w-[140px] order-2">
-                {stat.label}
-              </dt>
-              <dd className="text-white text-lg md:text-xl font-bold tracking-tight group-hover:scale-105 transition-transform duration-500 order-1">
+            <div key={index} className="flex flex-col items-center text-center group transform-gpu">
+              <dd className="text-white text-xl md:text-2xl font-black tracking-tighter group-hover:scale-105 transition-transform duration-500 font-sans">
                 {stat.value}
               </dd>
+              <dt className="text-white/50 text-[8px] md:text-[9px] font-bold uppercase tracking-[0.3em] mt-1">
+                {stat.label}
+              </dt>
             </div>
           ))}
         </dl>

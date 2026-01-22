@@ -10,13 +10,13 @@ const Hero: React.FC = () => {
 
       <div className="relative z-10 flex flex-col items-center text-center max-w-5xl">
         <div className="mb-10 md:mb-14 will-change-transform animate-hero-enter">
-          <span className="text-vintage-red font-bold uppercase tracking-[0.6em] text-[9px] md:text-[11px] mb-6 block opacity-0 animate-fade-in [animation-delay:0.3s] [animation-fill-mode:forwards]">Seu Próximo Movimento</span>
+          <span className="text-vintage-red font-bold uppercase tracking-[0.6em] text-[9px] md:text-[11px] mb-6 block md:opacity-0 md:animate-fade-in md:[animation-delay:0.3s] md:[animation-fill-mode:forwards]">Seu Próximo Movimento</span>
           <h1 id="hero-title" className="text-5xl md:text-8xl lg:text-[9.5rem] font-serif text-vintage-ink tracking-[-0.05em] font-black relative leading-none">
-            ADEMICON<span className="text-vintage-red animate-pulse-gentle">.</span>
+            ADEMICON<span className="text-vintage-red md:animate-pulse-gentle">.</span>
           </h1>
         </div>
 
-        <div className="max-w-2xl mt-4 opacity-0 animate-fade-in [animation-delay:1.2s] [animation-fill-mode:forwards]">
+        <div className="max-w-2xl mt-4 md:opacity-0 md:animate-fade-in md:[animation-delay:1.2s] md:[animation-fill-mode:forwards]">
           <p className="text-sm md:text-lg font-sans text-vintage-gray/80 tracking-wide font-light leading-relaxed">
             A estratégia de quem sabe que no jogo do patrimônio, <br className="hidden md:block" />
             <span className="text-vintage-red font-semibold italic">o planejamento é a sua peça mais forte.</span>
@@ -37,15 +37,25 @@ const Hero: React.FC = () => {
           0%, 100% { opacity: 1; transform: scale(1); }
           50% { opacity: 0.4; transform: scale(0.95); }
         }
-        .animate-hero-enter { 
-          animation: heroEnter 2s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+
+        @media (min-width: 769px) {
+          .animate-hero-enter { 
+            animation: heroEnter 2s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+          }
+          .animate-fade-in { 
+            animation: fadeIn 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+          }
+          .animate-pulse-gentle { 
+            animation: pulseGentle 5s ease-in-out infinite; 
+            display: inline-block;
+          }
         }
-        .animate-fade-in { 
-          animation: fadeIn 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
-        }
-        .animate-pulse-gentle { 
-          animation: pulseGentle 5s ease-in-out infinite; 
-          display: inline-block;
+
+        @media (max-width: 768px) {
+          .animate-hero-enter, .animate-fade-in {
+             opacity: 1 !important;
+             transform: none !important;
+          }
         }
       `}</style>
     </section>

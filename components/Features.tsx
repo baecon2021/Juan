@@ -19,25 +19,25 @@ const Features: React.FC = () => {
             return (
               <div 
                 key={idx} 
-                className={`p-10 md:p-14 transition-all duration-500 ease-in-out hover:bg-white group transform-gpu cursor-default ${
+                className={`p-10 md:p-14 transition-all duration-500 ease-in-out lg:hover:bg-white group transform-gpu cursor-default ${
                   idx % 2 === 0 ? 'bg-vintage-red' : 'bg-vintage-red/95'
                 }`}
               >
-                {/* Chess Piece Icon */}
-                <div className="text-white/40 text-4xl mb-8 transition-all duration-500 group-hover:text-vintage-red group-hover:scale-110 group-hover:-translate-y-1 font-serif select-none">
+                {/* Chess Piece Icon - Hover restrito a telas grandes */}
+                <div className="text-white/40 text-4xl mb-8 transition-all duration-500 lg:group-hover:text-vintage-red lg:group-hover:scale-110 lg:group-hover:-translate-y-1 font-serif select-none">
                   {feature.icon}
                 </div>
                 
-                <h3 className="text-xl md:text-2xl font-serif font-bold text-white mb-5 tracking-tight group-hover:text-vintage-ink transition-colors duration-500">
+                <h3 className="text-xl md:text-2xl font-serif font-bold text-white mb-5 tracking-tight lg:group-hover:text-vintage-ink transition-colors duration-500">
                   {feature.title}
                 </h3>
                 
-                <p className="text-white/80 text-[13px] md:text-sm leading-loose font-light group-hover:text-vintage-ink/80 transition-colors duration-500">
+                <p className="text-white/80 text-[13px] md:text-sm leading-loose font-light lg:group-hover:text-vintage-ink/80 transition-colors duration-500">
                   {feature.description}
                 </p>
                 
-                {/* Horizontal simple line */}
-                <div className="mt-10 h-px w-8 bg-white/20 group-hover:bg-vintage-red/30 transition-colors duration-500"></div>
+                {/* Horizontal line */}
+                <div className="mt-10 h-px w-8 bg-white/20 lg:group-hover:bg-vintage-red/30 transition-colors duration-500"></div>
               </div>
             );
           })}

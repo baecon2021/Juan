@@ -1,7 +1,8 @@
 
-import React, { useState, useEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useState, useEffect, useLayoutEffect, Suspense, lazy } from 'react';
+import { useLocation } from 'react-router-dom';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -17,86 +18,99 @@ import LoadingScreen from './components/LoadingScreen';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
-  // Global config para performance
-  gsap.config({ force3D: true });
 }
+
+const ScrollToHashElement = () => {
+  const { hash } = useLocation();
+
+  useLayoutEffect(() => {
+    if (hash) {
+      const id = hash.replace('#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        const navbarHeight = 80;
+        const targetPosition = element.offsetTop - navbarHeight;
+
+        window.scrollTo({
+          top: Math.max(0, targetPosition),
+          behavior: window.innerWidth <= 768 ? 'auto' : 'smooth'
+        });
+      }
+    } else {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+  }, [hash]);
+
+  return null;
+};
 
 function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!loading) {
-      let ctx: gsap.Context;
-      const timer = setTimeout(() => {
-        ctx = gsap.context(() => {
-          // Revelação elegante: Fade + Slide sutil
-          const reveals = document.querySelectorAll('.reveal');
-          reveals.forEach((el) => {
-            gsap.fromTo(el, 
-              { opacity: 0, y: 25 },
+    if (!loading && window.innerWidth > 768) {
+      const ctx = gsap.context(() => {
+        const reveals = document.querySelectorAll('.reveal');
+        reveals.forEach((el) => {
+          gsap.fromTo(el, 
+            { opacity: 0, y: 40 },
+            {
+              scrollTrigger: {
+                trigger: el,
+                start: "top 95%",
+                toggleActions: "play none none none",
+              },
+              opacity: 1,
+              y: 0,
+              duration: 1.5,
+              ease: "power4.out",
+              clearProps: "all"
+            }
+          );
+        });
+
+        const staggerContainers = document.querySelectorAll('.stagger-item');
+        staggerContainers.forEach((container) => {
+          if (container.children.length > 0) {
+            gsap.fromTo(container.children, 
+              { opacity: 0, y: 30 },
               {
                 scrollTrigger: {
-                  trigger: el,
-                  start: "top 88%",
-                  toggleActions: "play none none none",
+                  trigger: container,
+                  start: "top 90%",
                 },
                 opacity: 1,
                 y: 0,
-                duration: 1.4,
-                ease: "expo.out",
-                clearProps: "transform" // Evita problemas de z-index após animar
+                stagger: 0.15,
+                duration: 1.2,
+                ease: "power3.out",
+                clearProps: "all"
               }
             );
-          });
-
-          // Stagger refinado para grids
-          const staggerContainers = document.querySelectorAll('.stagger-item');
-          staggerContainers.forEach((container) => {
-            const items = container.children;
-            if (items.length > 0) {
-              gsap.fromTo(items, 
-                { opacity: 0, y: 15 },
-                {
-                  scrollTrigger: {
-                    trigger: container,
-                    start: "top 85%",
-                  },
-                  opacity: 1,
-                  y: 0,
-                  stagger: 0.1,
-                  duration: 1.2,
-                  ease: "power2.out"
-                }
-              );
-            }
-          });
-
-          ScrollTrigger.refresh();
+          }
         });
-      }, 100);
+      });
 
       return () => {
-        clearTimeout(timer);
-        if (ctx) ctx.revert();
+        ctx.revert();
+        ScrollTrigger.getAll().forEach(t => t.kill());
       };
     }
   }, [loading]);
 
   return (
     <>
+      <ScrollToHashElement />
       {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
-      <div className={`min-h-screen bg-vintage-bg text-vintage-ink font-sans selection:bg-brand-500 selection:text-white paper-texture overflow-x-hidden ${loading ? 'max-h-screen overflow-hidden' : ''}`}>
+      <div className={`min-h-screen bg-vintage-bg text-vintage-ink font-sans paper-texture overflow-x-hidden ${loading ? 'h-screen overflow-hidden' : ''}`}>
         <Navbar />
-        <main>
+        <main id="main-content">
           <Hero />
-          
           <Pain />
           <Mecanismo />
-          
-          <div className="bg-vintage-bg py-16 flex justify-center reveal">
-             <span className="text-[9px] uppercase tracking-[0.8em] text-vintage-red/30 font-bold">Arquitetura de Ativos</span>
+          <div className="bg-vintage-bg py-4 flex justify-center opacity-5">
+             <div className="w-px h-16 bg-vintage-red"></div>
           </div>
-
           <Simulator />
           <Features />
           <Bio />
